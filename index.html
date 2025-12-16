@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveMe - Your Digital Legacy, Preserved Forever</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-cta {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: clamp(18px, 2.5vw, 24px);
+            line-height: 1.6;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn-primary {
+            padding: 18px 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            padding: 18px 48px;
+            background: transparent;
+            border: 2px solid #667eea;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .section {
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #a0a0a0;
+            max-width: 700px;
+            margin: 0 auto 80px;
+            line-height: 1.6;
+        }
+
+        .problem {
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .problem-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .problem-card p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+
+        .solution {
+            background: #000;
+        }
+
+        .solution-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .solution-visual {
+            height: 500px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-visual::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .solution-text h3 {
+            font-size: 36px;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .solution-text p {
+            color: #a0a0a0;
+            line-height: 1.8;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .features {
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #a0a0a0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .trust {
+            background: #000;
+            padding: 120px 40px;
+        }
+
+        .trust-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trust-badge-icon {
+            font-size: 48px;
+        }
+
+        .trust-badge span {
+            color: #a0a0a0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cta-final {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+        .cta-final h2 {
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .cta-final p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-final .btn-primary {
+            background: #fff;
+            color: #667eea;
+        }
+
+        .cta-final .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        footer {
+            background: #000;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">SaveMe</div>
+        <button class="nav-cta">Start Preserving</button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your voice. Your stories. Forever.</h1>
+            <p>Preserve your digital identity and create a private AI that speaks like you—so your family can still hear your voice, stories, and guidance in the future.</p>
+            <div class="hero-cta">
+                <button class="btn-primary">Get Early Access</button>
+                <button class="btn-secondary">Watch Demo</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section problem">
+        <h2 class="section-title">What Gets Lost</h2>
+        <p class="section-subtitle">Every year, families lose something irreplaceable—memories scattered across devices, fading with time.</p>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">💭</div>
+                <h3>A parent's voice</h3>
+                <p>The way they said your name, told stories, gave advice. Once it's gone, it's gone forever.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📖</div>
+                <h3>Grandparents' stories</h3>
+                <p>Family history, traditions, the small details that made them unique—lost between generations.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🧩</div>
+                <h3>Fragmented memories</h3>
+                <p>Photos, videos, messages scattered across phones and clouds—disconnected and fading.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section solution">
+        <div class="solution-content">
+            <div class="solution-visual">
+                <span style="position: relative; z-index: 1;">🧬</span>
+            </div>
+            <div class="solution-text">
+                <h3>A living digital legacy</h3>
+                <p>SaveMe transforms your scattered digital footprint into something extraordinary: a personalized AI that captures how you speak, think, and share wisdom.</p>
+                <p>Not a generic chatbot. A person-specific model built from your real voice, videos, photos, and conversations—preserved for the people who matter most.</p>
+                <p>Your children can talk to the "saved" version of you. Your grandchildren can hear your stories. Your presence lives on, meaningfully.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section features">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Build your digital identity vault in five simple steps</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h4>Capture</h4>
+                <p>Upload voice recordings, videos, photos, and connect your digital memories</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h4>Process</h4>
+                <p>AI extracts your unique voice style, stories, relationships, and personality traits</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h4>Personalize</h4>
+                <p>Your model learns your tone, phrasing, values, and the way you express yourself</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h4>Interact</h4>
+                <p>Family members can chat, speak, and ask questions in natural conversation</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h4>Control</h4>
+                <p>You decide who has access, when, and how your digital self can be used</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h4>Legacy Modes</h4>
+                <p>Birthday messages, parenting advice, family history sessions—on your terms</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust">
+        <div class="trust-content">
+            <h2 class="section-title">Built on Trust & Consent</h2>
+            <p class="section-subtitle">Your identity is sacred. SaveMe is designed with privacy, consent, and emotional safety at its core.</p>
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    <span>100% OPT-IN</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🔒</div>
+                    <span>PRIVATE VAULT</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">👤</div>
+                    <span>YOU CONTROL ACCESS</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">⚖️</div>
+                    <span>LEGACY GOVERNANCE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-final">
+        <h2>Preserve what matters most</h2>
+        <p>Join the waitlist and be among the first to create your digital legacy</p>
+        <button class="btn-primary">Get Early Access</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SaveMe. Your identity, forever preserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('Button clicked:', button.textContent);
+            });
+        });
+
+        // Add scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.problem-card, .feature-card, .solution-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
